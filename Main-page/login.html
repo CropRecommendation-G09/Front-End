@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        @media only screen and (max-width: 600px) {
+            .welcome-section,
+            .container {
+                width: auto; /* 在手机上铺满屏幕宽度 */
+                height: auto; /* 自适应内容高度 */
+        }
+
+        .fieldset-container {
+            width: auto;
+        }
+
+    /* 调整表格样式以更好地适应手机屏幕 */
+        table {
+            width: 100%;
+            display: block; /* 使表格可滚动 */
+            overflow-x: auto; /* 允许在x轴方向滚动 */
+        }
+
+        th, td {
+            padding: 4px; /* 适当减小填充 */
+            font-size: 12px; /* 减小字体大小以适应更小的屏幕 */
+        }
+
+        .modal-content {
+            width: 95%; /* 减小模态框的宽度 */
+            max-width: none; /* 移除最大宽度限制 */
+        }
+        }
+        body {
+            width: 100%;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+
+        }
+        h1 {
+            margin-left: 3.3%;
+            text-align: center;
+        }
+        h3{
+            font-size: 30px;
+            margin-left: 3.3%;
+            text-align: center;
+        }
+        .slide-container {
+            display:flexbox;
+            width: 150vw;
+            height: 80vh;
+            overflow: hidden;
+        }
+        .welcome-section {
+            width: 100%;
+            height: 100%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: width 0.5s ease;
+            position: relative; /* 添加相对定位 */
+        }
+        #get-started {
+          min-width: 130px;
+          height: 40px;
+          color: #fff;
+          padding: 5px 10px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          display: inline-block;
+          outline: none;
+          overflow: hidden;
+          border-radius: 5px;
+          border: none;
+          background-color: #3d348b
+        }
+        #get-started:hover {
+          border-radius: 5px;
+          padding-right: 24px;
+          padding-left:8px;
+        }
+        #get-started:hover:after {
+          opacity: 1;
+          right: 10px;
+        }
+        #get-started:after {
+          content: "\00BB";
+          position: absolute;
+          opacity: 0;
+          font-size: 20px;
+          line-height: 40px;
+          top: 0;
+          right: -20px;
+          transition: 0.4s;
+        }
+
+
+
+        .fieldset-container{
+            height: 100%;
+            width: 100%;
+
+        }
+
+        .container {
+            width: 0;
+            height: 100%;
+            transition: width 0.5s ease, opacity 0.5s ease, left 0.5s ease;
+            overflow: hidden;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            bottom: 50%;
+            left: 50%;  /* 初始隐藏时位于中央，但因为宽度为0不可见 */
+
+            z-index: 1;  /* 确保在最前面 */
+        }
+        .form,
+        .fieldset-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+
+        fieldset {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        input[type="number"], select {
+        background-color: rgba(255, 255, 255, 0.5); /* 白色半透明背景 */
+
+        transition: background-color 0.3s ease; /* 背景色变化的过渡效果 */
+    }
+
+        input[type="number"]:focus, select:focus {
+        background-color: rgba(255, 255, 255, 0.75); /* 焦点时背景更少透明 */
+        border-color: #007aff; /* 焦点时边框颜色 */
+}
+
+
+        .fas fa-history history-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;  /* 或者根据您的设计调整大小 */
+            cursor: pointer;
+            z-index: 10;  /* 确保它位于其他元素之上 */
+        }
+        i{
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+        }
+
+        form{
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 750px;
+            animation: fadeIn 1s ease-in-out;
+            position: relative; /* 添加相对定位 */
+            margin: 0 auto; /* 水平居中 */
+        }
+
+        input[type="number"],
+        button {
+            padding: 5px;
+            margin-bottom: 8px;
+            width: 93%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+
+        button {
+
+            margin-top: 10px;
+            width: auto;
+            background-color: #cbd79a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #367c39;
+        }
+        .history-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;  /* 或者根据您的设计调整大小 */
+            cursor: pointer;
+            z-index: 10;  /* 确保它位于其他元素之上 */
+        }
+
+        .error {
+            color: red;
+            margin-left: 5px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .modal-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            table-layout: fixed; /* 使用固定表格布局 */
+            overflow-x: auto; /* 允许水平滚动 */
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            overflow: hidden; /* 防止内容溢出 */
+            text-overflow: ellipsis; /* 超出部分显示省略号 */
+            white-space: nowrap;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table.td:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        table.td:nth-child(even) {
+            background-color: #e9e9e9;
+        }
+
+        tr:nth-child(even) .td {
+            background-color: #f1f1f1;
+        }
+
+        tr:nth-child(odd) .td {
+            background-color: #ffffff;
+        }
+        #submitButton {
+          min-width: 130px;
+          height: 40px;
+          color: #fff;
+          padding: 5px 10px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          display: inline-block;
+          outline: none;
+          border-radius: 20px;
+          border: 2px solid #2c0b8e;
+          background: #2c0b8e;
+        }
+        #submitButton:hover {
+          background: #fff;
+          color: #2c0b8e
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .page-button {
+            cursor: pointer;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .page-button:hover {
+            background-color: #367c39;
+        }
+
+        .page-button[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #5ee7df;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #3ac6d8;
+        }
+
+
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #888;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 600px) {
+            .form__title {
+                font-size: 1.2rem;  /* 减小标题字体大小 */
+            }
+
+            .input {
+                padding: 0.8rem 0.8rem;  /* 调整输入框内边距 */
+            }
+
+            .btn {
+                padding: 0.7rem 20%;  /* 调整按钮的内边距并设置宽度为百分比 */
+                font-size: 0.7rem;    /* 减小按钮字体大小 */
+                border-radius: 15px;  /* 调整按钮圆角大小 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <i class="fas fa-history history-icon" onclick="showModal()"></i>
+
+    <div class="modal" id="historyModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>History Records</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Crop</th>
+                        <th>pH</th>
+                        <th>N</th>
+                        <th>P</th>
+                        <th>k</th>
+                        <th>°C</th>
+                        <th>Humidity</th>
+                        <th>Rainfall</th>
+                    </tr>
+                </thead>
+                <tbody id="historyData">
+                    <!-- History data will be loaded here -->
+                </tbody>
+            </table>
+             <div>
+                <button id="prevButton" onclick="previousPage()" style="visibility: hidden;"><i class="fas fa-arrow-left"></i></button>
+<button id="nextButton" onclick="nextPage()" style="visibility: hidden;"><i class="fas fa-arrow-right"></i></button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container">
+        <div class="welcome-section" id="welcome-section">
+            <h1>Welcome to Crop Recommendation System</h1>
+            <button id="get-started">Start</button>
+        </div>
+        <div id="form-container" class="container hidden">
+
+            <h3>Crop Recommendation</h3>
+            <div class="fieldset-container">
+                <form id="cropForm" oninput="validateForm()">
+                    <fieldset>
+                        <legend>Soil Nutrients</legend>
+                        <label for="nitrogen">Nitrogen (mg/kg):</label>
+                        <input type="number" id="nitrogen" name="nitrogen" required>
+                        <span class="error" id="nitrogen-error"></span><br>
+
+                        <label for="phosphorus">Phosphorus (mg/kg):</label>
+                        <input type="number" id="phosphorus" name="phosphorus" required>
+                        <span class="error" id="phosphorus-error"></span><br>
+
+                        <label for="potassium">Potassium (mg/kg):</label>
+                        <input type="number" id="potassium" name="potassium" required>
+                        <span class="error" id="potassium-error"></span><br>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Environmental Conditions</legend>
+                        <label for="temperature">Temperature (°C):</label>
+                        <input type="number" id="temperature" name="temperature" required>
+                        <span class="error" id="temperature-error"></span><br>
+
+                        <label for="humidity">Humidity (%):</label>
+                        <input type="number" id="humidity" name="humidity" required>
+                        <span class="error" id="humidity-error"></span><br>
+
+                        <label for="ph">pH Level:</label>
+                        <input type="number" id="ph" name="ph" step="0.1" min="1" max="14" required>
+                        <span class="error" id="ph-error"></span><br>
+
+                        <label for="rainfall">Rainfall (mm):</label>
+                        <input type="number" id="rainfall" name="rainfall" required>
+                        <span class="error" id="rainfall-error"></span><br>
+                    </fieldset>
+                </form>
+                <button type="button" id="submitButton" disabled onclick="getRecommendation()">Get Recommendation</button>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+    const historyIcon = document.querySelector('.history-icon');
+
+    window.onbeforeunload = function() {
+    // 清除localStorage
+    localStorage.removeItem('loggedIn');
+    alert('Please login again.'); // 提示重新登录
+};
+
+let currentPage = 1;
+const recordsPerPage = 5;
+let historyData = []; //
+
+function showModal() {
+    document.getElementById('historyModal').style.display = 'block';
+    fetchHistory();
+}
+
+function closeModal() {
+    document.getElementById('historyModal').style.display = 'none';
+}
+
+function displayPage() {
+    const startIndex = (currentPage - 1) * recordsPerPage;
+    const endIndex = startIndex + recordsPerPage;
+    const pageData = historyData.slice(startIndex, endIndex);
+
+    const historyElement = document.getElementById('historyData');
+    historyElement.innerHTML = ''; // 清空当前显示
+    pageData.forEach(record => {
+        historyElement.innerHTML += `
+            <tr>
+                <td>${record.recordDate}</td>
+                <td>${record.label}</td>
+                <td>${record.pHValue}</td>
+                <td>${record.nitrogen}</td>
+                <td>${record.phosphorus}</td>
+                <td>${record.potassium}</td>
+                <td>${record.temperature}</td>
+                <td>${record.humidity}</td>
+                <td>${record.rainfall}</td>
+            </tr>
+        `;
+    });
+
+    updatePagination();
+}
+
+function updatePagination() {
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    prevButton.style.visibility = currentPage > 1 ? 'visible' : 'hidden';
+    nextButton.style.visibility = currentPage * recordsPerPage < historyData.length ? 'visible' : 'hidden';
+}
+
+function nextPage() {
+    currentPage++;
+    displayPage();
+}
+
+function previousPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        displayPage();
+    }
+}
+
+function fetchHistory() {
+    fetch('http://121.199.172.86:5000/get_history')
+    .then(response => response.json())
+    .then(data => {
+        historyData = data; // 存储数据
+        displayPage(); // 显示第一页
+    })
+    .catch(error => {
+        console.error('Error fetching history:', error);
+        document.getElementById('historyData').innerHTML = 'Error fetching data.';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchHistory(); // 初始加载时获取历史数据
+});
+
+function validateForm() {
+    const inputs = document.querySelectorAll('#cropForm input[type="number"]');
+    const allFilled = Array.from(inputs).every(input => {
+        const errorSpan = document.getElementById(input.id + '-error');
+        if (input.value.trim() === '') {
+            errorSpan.textContent = '✖'; // Show a red cross if the input is empty
+            return false;
+        } else {
+            errorSpan.textContent = ''; // Clear the error
+            return true;
+        }
+    });
+
+    document.getElementById('submitButton').disabled = !allFilled;
+}
+
+function getRecommendation() {
+    // 添加用户登录状态检查
+    if (!localStorage.getItem('loggedIn')) {
+        alert('用户未登录！');
+        window.location.href = 'http://121.199.172.86';
+        return; // 如果用户未登录，停止执行后续代码
+    }
+
+    const data = {
+        nitrogen: document.getElementById('nitrogen').value,
+        phosphorus: document.getElementById('phosphorus').value,
+        potassium: document.getElementById('potassium').value,
+        temperature: document.getElementById('temperature').value,
+        humidity: document.getElementById('humidity').value,
+        ph: document.getElementById('ph').value,
+        rainfall: document.getElementById('rainfall').value
+    };
+
+    if (document.getElementById('nitrogen').value > 300 ||
+        document.getElementById('phosphorus').value > 300 || document.getElementById('phosphorus').value < 5 ||
+        document.getElementById('temperature').value > 300 || document.getElementById('potassium').value < 8 ||
+        document.getElementById('potassium').value > 300 || document.getElementById('potassium').value < 5 ||
+        document.getElementById('humidity').value > 300 || document.getElementById('humidity').value < 14 ||
+        document.getElementById('ph').value > 10 || document.getElementById('ph').value < 3 ||
+        document.getElementById('rainfall').value > 1000 || document.getElementById('rainfall').value < 20
+    ) {
+        window.location.href = 'runError.html';
+        return; // 如果输入数据不符合要求，停止执行后续代码
+    }
+
+    fetch('http://121.199.172.86:5000/get_crop_recommendation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.recommended_crop) {
+                // 如果成功获取到推荐作物，跳转到该作物对应的HTML页面
+                window.location.href = data.recommended_crop + '.html';
+            } else {
+                // 如果没有获取到推荐作物，显示错误信息
+                alert('No recommendation received.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching recommendation: ' + error.message);
+        });
+}
+        //add
+        document.getElementById('get-started').addEventListener('click', function() {
+    const welcomeSection = document.getElementById('welcome-section');
+    const formContainer = document.getElementById('form-container');
+
+    // 隐藏欢迎面板
+    welcomeSection.style.width = '0';
+    welcomeSection.style.opacity = '0';
+    welcomeSection.style.transition = 'width 0.5s ease, opacity 0.5s ease';
+
+    // 显示并扩展操作面板
+    formContainer.style.width = '75%';  // 或者 '100%' 以全屏显示
+    formContainer.style.opacity = '1';
+    formContainer.style.left = '50%';  // 移动到视窗中央
+    formContainer.style.transform = 'translate(-50%, -50%)'; // 确保居中
+    formContainer.classList.remove('hidden');
+    historyIcon.style.opacity = '1';
+});
+
+
+    </script>
+</body>
+</html>

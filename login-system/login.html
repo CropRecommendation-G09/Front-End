@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://codepen.io/danielkvist/pen/LYNVyPL -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop-Recommendation</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="title">Crop Recommendation</div>
+
+  <div class="container right-panel-active">
+    <!-- Sign Up -->
+    <div class="container__form container--signup">
+      <form action="php/register.php" method="post" class="form" id="form1">
+        <h2 class="form__title">Sign Up</h2>
+        <input type="text" name="name" placeholder="User" class="input" />
+        <input type="email" name="email" placeholder="Email" class="input" />
+        <input type="password" placeholder="Password" name="password" class="input" />
+        <button class="btn" type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+      <form action="php/login.php" method="post" class="form" id="form2">
+        <h2 class="form__title">Sign In</h2>
+        <input type="text"  name="email"  placeholder="Email" class="input" />
+        <input type="password" name="password" placeholder="Password" class="input" />
+        <a href="#" class="link">Forgot your password?</a>
+        <button class="btn"  type="submit">Sign In</button>
+      </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="container__overlay">
+      <div class="overlay">
+        <div class="overlay__panel overlay--left">
+          <button class="btn" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay__panel overlay--right">
+          <button class="btn" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const signInBtn = document.getElementById("signIn");
+    const signUpBtn = document.getElementById("signUp");
+    const fistForm = document.getElementById("form1");
+    const secondForm = document.getElementById("form2");
+    const container = document.querySelector(".container");
+
+    signInBtn.addEventListener("click", () => {
+      container.classList.remove("right-panel-active");
+    });
+
+    signUpBtn.addEventListener("click", () => {
+      container.classList.add("right-panel-active");
+    });
+    // 当用户登录成功后，调用这个函数来改变URL
+function changeURL() {
+    // 使用 history.pushState() 方法添加新的状态到历史状态栈
+    history.pushState({page: "home"}, "Home", "/home");
+    // 如果你想要替换当前的历史记录项，可以使用 replaceState
+    // history.replaceState({page: "home"}, "Home", "/home");
+}
+
+// 侦听 popstate 事件来响应用户的前进和后退操作
+window.addEventListener("popstate", function(event) {
+    if (event.state) {
+        // 根据 state 对象来决定你的应用如何响应
+        console.log("State: ", event.state);
+    }
+});
+
+  /*  fistForm.addEventListener("submit", (e) => e.preventDefault());
+    secondForm.addEventListener("submit", (e) => e.preventDefault());*/
+
+  </script>
+</body>
+
+</html>
+
