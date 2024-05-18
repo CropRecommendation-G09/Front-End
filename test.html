@@ -1,0 +1,52 @@
+<script>
+    function getRecommendation() {
+        const data = {
+            nitrogen: document.getElementById('nitrogen').value,
+            phosphorus: document.getElementById('phosphorus').value,
+            potassium: document.getElementById('potassium').value,
+            temperature: document.getElementById('temperature').value,
+            humidity: document.getElementById('humidity').value,
+            ph: document.getElementById('ph').value,
+            rainfall: document.getElementById('rainfall').value
+        };
+
+        // Step 1: 检查是否可以到达服务器
+        fetch('http://127.0.0.1:5000/test_connection', { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Cannot reach server.');
+            }
+            // Step 2: 检查跨域问题
+            fetch('http://127.0.0.1:5000/test_cors', { method: 'GET' })
+            .then(corsResponse => {
+                if (!corsResponse.ok) {
+                    throw new Error('CORS issue.');
+                }
+                // Step 3: 发送真正的请求
+                fetch('http://127.0.0.1:5000/get_crop_recommendation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerHTML = 'Recommended Crop: ' + data.recommended_crop;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerHTML = 'Error fetching recommendation.';
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerHTML = 'CORS issue.';
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('result').innerHTML = 'Cannot reach server.';
+        });
+    }
+</script>

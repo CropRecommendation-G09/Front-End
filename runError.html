@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Soil test results</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            background: white;
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+         }
+         .alert {
+            padding: 20px;
+            background-color: #f44336; /* Red */
+            color: white;
+            margin-bottom: 15px;
+        }
+        .info {
+            padding: 20px;
+            background-color: #2196F3; /* Blue */
+            color: white;
+            margin-bottom: 15px;
+        }
+        .back-link {
+            text-decoration: none;
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+            color: #0d47a1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Soil test results</h1>
+        <div class="alert">
+            <strong>Error：</strong>The data you entered is abnormal, please check and resubmit it。
+        </div>
+        <div class="info">
+            <strong>Error：</strong>If you confirm your inputs are correct, this soil is not suitable for growing any crops
+        </div>
+        <a href="login.html" class="back-link">Back</a>
+    </div>
+</body>
+</html>
