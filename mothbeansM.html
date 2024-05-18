@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poetsen+One&family=Teachers:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moth beans Growing Guide</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            height: 100vh;
+        }
+
+        .container {
+            padding: 10px;
+        }
+
+        h1 {
+            color: #5C573E;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2{
+              font-family: "Teachers", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: <weight>;
+                font-style: normal;
+        }
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #8A9A5B;
+    border-radius: 8px;
+}
+p{
+    margin-left: 30px;
+    margin-right: 30px;
+    line-height: 1.5; /* 设置行距 */
+    font-family: "Poetsen One", sans-serif; /* 设置字体 */
+}
+
+header nav ul li {
+    flex: 1;
+    text-align: center;
+    /*word-break: break-all;*/
+    font-size: small; /* 缩小字体大小 */
+
+}
+
+header nav ul li a {
+    display: block;
+    padding: 12px;
+    color: #F4F4F9;
+    text-decoration: none;
+    line-height: 1.5;
+}
+
+
+        header nav ul li:hover, header nav ul li a.active {
+            background-color: #556B2F;
+        }
+
+        section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-image {
+            padding-top:15px;
+            height: 200px;
+            width: 200px;
+            margin: 0 auto 10px;
+        }
+
+        .back-button {
+            text-align: center;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #8A9A5B;
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        #back-to-top:hover {
+            background-color: #556B2F;
+        }
+
+        @media (max-width: 768px) {
+            header nav ul li {
+                width: auto;
+            }
+
+            .section-image {
+                max-width: 100%;
+            }
+
+            .container {
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Moth beans Growing Guide</h1>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="#preparation" onclick="showSection('preparation'); return false;">Preparation</a></li>
+                    <li><a href="#method" onclick="showSection('method'); return false;">Method</a></li>
+                    <li><a href="#timing" onclick="showSection('timing'); return false;">Time</a></li>
+                    <li><a href="#care" onclick="showSection('care'); return false;">Post</a></li>
+                    <li><a href="#harvest" onclick="showSection('harvest'); return false;">Harvest</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section id="preparation">
+            <img src="../imgs/mothbean1.png" alt="pH" class="section-image">
+            <h2>Preparation before sowing</h2>
+            <p>Soil preparation for growing moth beans includes choosing a loose soil rich in organic matter, ensuring good drainage and proper pH adjustment, so that the pH range is generally between 6.0 and 7.5 to provide a good growing environment.</p>
+        </section>
+        <section id="method">
+            <img src="../imgs/mothbean2.png" alt="Sowing" class="section-image">
+            <h2>Sowing method</h2>
+            <p>The method of sowing moth beans is to evenly spread the seeds on the prepared soil, cover with a thin layer of soil, keep it properly moist and provide a suitable temperature, and carry out timely thinning and adjustment after germination.</p>
+        </section>
+        <section id="timing">
+            <img src="../imgs/post.jpg" alt="Spring&Winter" class="section-image">
+            <h2>Best time to sow</h2>
+            <p>The best time to sow moth beans is in warm seasons, such as spring or summer, when the soil temperature is stable above 15 degrees Celsius.</p>
+        </section>
+        <section id="care">
+            <img src="../imgs/protect.jpg" alt="protect" class="section-image">
+            <h2>Post-sowing care</h2>
+            <p>The care of moth beans after sowing includes keeping the soil moist but avoiding overwatering, providing sufficient sunlight, regular weeding, timely fertilization to promote growth and control pests and diseases, while monitoring the health of the seedlings and taking necessary measures in time.</p>
+        </section>
+        <section id="harvest">
+            <img src="../imgs/mothbean3.png" alt="Harvest" class="section-image">
+            <h2>Harvest and Next Steps</h2>
+            <p>The harvest time is generally about 60 to 70 days after sowing. It can be harvested when the pods become full and darker in color, judging by the maturity and size of the observed pods.</p>
+        </section>
+        
+        <button class="back-button" onclick="goBack()">Back</button>
+
+        <a href="#" id="back-to-top" title="Back to Top">^</a>
+    </div>
+
+    <script>
+        function showSection(id) {
+            var sections = document.querySelectorAll('section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = 'none';
+            }
+            document.getElementById(id).style.display = 'block';
+
+            var links = document.querySelectorAll('nav ul li a');
+            for (var j = 0; j < links.length; j++) {
+                links[j].classList.remove('active');
+            }
+            event.target.classList.add('active');
+        }
+
+        window.addEventListener('scroll', function() {
+            var backToTopButton = document.getElementById('back-to-top');
+            if (window.pageYOffset > 100) {
+                backToTopButton.style.display = 'block';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        document.getElementById('back-to-top').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        showSection('preparation'); // Initialize the first section as visible on page load
+
+        function goBack() {
+            // 需要返回的html文件名
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
