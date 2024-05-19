@@ -14,4 +14,9 @@
 - Completed user state detection and predictive data parameterization in JS (login.html)
 - Debugging and connecting the front-end and back-end of user login and registration to ensure the storage and validation of user information in the database (index.html & login.php & register.php).
 
+### Jiang Xinyuan
+- Main responsibilities：
+  - UI design
+  - Complete the computer page and mobile page of crops (cotton.html - maize.html)
+
 ### The prototype of the login screen is inherited from the previous group
